@@ -16,4 +16,7 @@ boot_sect.bin: boot.asm
 	nasm $< -f bin -o $@
 	
 clean:
-	rm *.bin *.o os-image
+	rm -fr *.bin *.o os-image *.dis *.map
+	
+kernel.dis: kernel.bin
+	ndisasm -b 32 $< > $@
