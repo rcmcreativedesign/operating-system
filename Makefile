@@ -1,5 +1,5 @@
-C_SOURCES = $(wildcard kernel/*.c drivers/*.c)
-HEADERS = $(wildcard kernel/*.h drivers/*.h)
+C_SOURCES = $(wildcard kernel/*.c drivers/*.c libc/*.c)
+HEADERS = $(wildcard kernel/*.h drivers/*.h libc/*.h)
 OBJ = ${C_SOURCES:.c=.o}
 
 all: os-image
@@ -7,7 +7,7 @@ all: os-image
 os-image: boot/boot.bin kernel.bin
 	cat $^ > os-image
 	
-kernel.bin : kernel/kernel_entry.o ${OBJ}
+kernel.bin : boot/kernel_entry.o ${OBJ}
 	i686-elf-ld -o $@ -Ttext 0x1000 $^ --oformat binary
 
 %.o : %.c ${HEADERS}
