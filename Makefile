@@ -7,7 +7,7 @@ all: os-image
 os-image: boot/boot.bin kernel.bin
 	cat $^ > os-image
 	
-kernel.bin : kernel/kernel_entry.o ${OBJ}
+kernel.bin : boot/kernel_entry.o ${OBJ}
 	i686-elf-ld -o $@ -Ttext 0x1000 $^ --oformat binary
 
 %.o : %.c ${HEADERS}
