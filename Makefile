@@ -1,5 +1,5 @@
-C_SOURCES = $(wildcard kernel/*.c drivers/*.c libc/*.c)
-HEADERS = $(wildcard kernel/*.h drivers/*.h libc/*.h)
+C_SOURCES = $(wildcard kernel/*.c drivers/*.c drivers/disk/*.c libc/*.c)
+HEADERS = $(wildcard kernel/*.h drivers/*.h drivers/disk/*.h libc/*.h)
 OBJ = ${C_SOURCES:.c=.o}
 
 all: os-image
