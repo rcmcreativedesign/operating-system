@@ -1,5 +1,6 @@
-#ifndef STRINGS_H
-#define STRINGS_H
+#ifndef STRING_H
+#define STRING_H
+#include "types.h"
 
 int strlen(char s[]);
 int strcmp(char s1[], char s2[]);
