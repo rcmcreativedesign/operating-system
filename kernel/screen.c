@@ -1,5 +1,5 @@
 #include "screen.h"
-#include "../kernel/ports.h"
+#include "kernel.h"
 #include "../libc/string.h"
 
 int get_cursor_offset();
@@ -45,8 +45,8 @@ void kclear_screen() {
 
 void kreset_prompt() {
 	kclear_screen();
-	set_cursor_offset(get_offset(0, MAX_ROWS));
-	kprint("R:>");
+	set_cursor_offset(get_offset(1, MAX_ROWS));
+	kprint("R:>\0");
 }
 
 int kprint_char(char character, int col, int row, char attribute_byte) {

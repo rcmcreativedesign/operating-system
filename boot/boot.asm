@@ -9,7 +9,6 @@ KERNEL_OFFSET equ 0x1000
 	mov bx, MSG_REAL_MODE
 	call print_string
 	call print_new_line
-
 	call load_kernel
 	call switch_to_pm
 	jmp $

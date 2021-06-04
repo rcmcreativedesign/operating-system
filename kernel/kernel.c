@@ -1,4 +1,7 @@
-#include "../drivers/screen.h"
+#include "screen.h"
+#include "idt.h"
+#include "timer.h"
+#include "kernel.h"
 #include "../libc/sleep.h"
 #include "../libc/types.h"
 
@@ -40,7 +43,14 @@ void main() {
 	kprint_char('X', 13, 2, WHITE_ON_RED);
 	kprint_char('X', 12, 2, WHITE_ON_RED);
 	
-	sleep(1);
-	
-	kreset_prompt();
+	idt_init();
+	timer_init();
+
+	// //sleep(1);
+	// while(timer_ticks < 18 & 300)
+	// 	kprint("One Tick");
+
+	if (timer_ticks > 1)
+		kreset_prompt();
+
 }
