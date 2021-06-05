@@ -187,4 +187,7 @@ void idt_init(void)
     idt_ptr[1] = idt_address >> 16;
 
     load_idt(idt_ptr);
+
+    if (DEBUG)
+        putline("IDT Initialized");
 }

@@ -1,8 +1,10 @@
+#include "../kernel/kernel.h"
+
 unsigned int sleep(unsigned int seconds) {
-    int i;
-    long calculatedLoop = seconds * 1000000000;
-    for (i = 0; i < calculatedLoop; i++) {
-        ;
-    }
+    unsigned int ticks = 18 * seconds;
+    unsigned int eticks;
+    eticks = timer_ticks + ticks;
+    while (timer_ticks < eticks)
+        __asm__ __volatile__ ("sti//hlt//cli");
     return 0;
 };
