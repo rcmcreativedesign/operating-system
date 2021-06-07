@@ -1,10 +1,14 @@
-#include "../drivers/screen.h"
+#include "screen.h"
+#include "idt.h"
+#include "timer.h"
+#include "kernel.h"
+#include "../libc/sleep.h"
+#include "../libc/types.h"
 
 void main() {
-	// char* video_memory = (char*) 0xb8000;
-	// *video_memory = 'X';
-	
+
 	kclear_screen();
+
 	kprint_char('H', 0, 5, WHITE_ON_BLACK);
 	kprint_char('E', 1, 5, WHITE_ON_BLACK);
 	kprint_char('L', 2, 5, WHITE_ON_BLACK);
@@ -39,13 +43,14 @@ void main() {
 	kprint_char('X', 13, 2, WHITE_ON_RED);
 	kprint_char('X', 12, 2, WHITE_ON_RED);
 	
-	pause();
+	idt_init();
+	timer_init();
 
-	kreset_prompt();
-}
+	// //sleep(1);
+	// while(timer_ticks < 18 & 300)
+	// 	kprint("One Tick");
 
-void pause() {
-	int i;
-	for (i = 1000000; i > 0; i--)
-		;
+	if (timer_ticks > 1)
+		kreset_prompt();
+
 }

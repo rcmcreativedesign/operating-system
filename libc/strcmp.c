@@ -1,11 +1,4 @@
-#include "strings.h"
-
-int strlen(char s[]) {
-    int i = 0;
-    while (s[i] != '\0')
-        i++;
-    return i;
-}
+#include "types.h"
 
 int strcmp(char s1[], char s2[]) {
     int i;
@@ -15,3 +8,6 @@ int strcmp(char s1[], char s2[]) {
     }
     return s1[i] - s2[i];
 }
+
+
+

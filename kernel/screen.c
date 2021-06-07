@@ -1,6 +1,6 @@
 #include "screen.h"
-#include "../kernel/ports.h"
-#include "../kernel/util.h"
+#include "kernel.h"
+#include "../libc/string.h"
 
 int get_cursor_offset();
 void set_cursor_offset(int offset);
@@ -45,8 +45,8 @@ void kclear_screen() {
 
 void kreset_prompt() {
 	kclear_screen();
-	set_cursor_offset(get_offset(0, MAX_ROWS));
-	kprint("R:>");
+	set_cursor_offset(get_offset(1, MAX_ROWS));
+	kprint("R:>\0");
 }
 
 int kprint_char(char character, int col, int row, char attribute_byte) {
@@ -75,7 +75,7 @@ int kprint_char(char character, int col, int row, char attribute_byte) {
 	if (offset >= MAX_ROWS * MAX_COLS * 2) {
 		int i;
 		for (i = 1; i < MAX_ROWS; i++) 
-			memory_copy(get_offset(0, i) + VIDEO_ADDRESS,
+			memcpy(get_offset(0, i) + VIDEO_ADDRESS,
 						get_offset(0,  i - 1) + VIDEO_ADDRESS,
 						MAX_COLS * 2);
 		
@@ -96,7 +96,7 @@ int handle_scrolling(int cursor_offset) {
 	
 	int i;
 	for (i = 1; i < MAX_ROWS; i++) {
-		memory_copy((char)get_offset(0, i) + VIDEO_ADDRESS,
+		memcpy((char)get_offset(0, i) + VIDEO_ADDRESS,
 					(char)get_offset(0, i - 1) + VIDEO_ADDRESS,
 					MAX_COLS * 2);
 	}
@@ -112,19 +112,19 @@ int handle_scrolling(int cursor_offset) {
 }
 
 int get_cursor_offset() {
-	port_byte_out(REG_SCREEN_CTRL, 14);
-	int offset = (int)port_byte_in(REG_SCREEN_DATA) << 8;
-	port_byte_out(REG_SCREEN_CTRL, 15);
-	offset += (int)port_byte_in(REG_SCREEN_DATA);
+	outb(REG_SCREEN_CTRL, 14);
+	int offset = (int)inb(REG_SCREEN_DATA) << 8;
+	outb(REG_SCREEN_CTRL, 15);
+	offset += (int)inb(REG_SCREEN_DATA);
 	return offset * 2;
 }
 
 void set_cursor_offset(int offset) {
 	offset /= 2;
-	port_byte_out(REG_SCREEN_CTRL, 14);
-	port_byte_out(REG_SCREEN_DATA, (unsigned char)(offset >> 8));
-	port_byte_out(REG_SCREEN_CTRL, 15);
-	port_byte_out(REG_SCREEN_DATA, (unsigned char)(offset & 0xff));
+	outb(REG_SCREEN_CTRL, 14);
+	outb(REG_SCREEN_DATA, (unsigned char)(offset >> 8));
+	outb(REG_SCREEN_CTRL, 15);
+	outb(REG_SCREEN_DATA, (unsigned char)(offset & 0xff));
 	
 }
 
