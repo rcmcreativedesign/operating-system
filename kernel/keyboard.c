@@ -1,5 +1,5 @@
 #include "kernel.h"
-#include "screen.h"
+//#include "screen.h"
 #include "keycodes.h"
 
 #define KEYBOARD_STATUS_PORT 0x64
@@ -10,14 +10,16 @@ void keyboard_handler_main(void) {
     char keycode;
 
     status = inb(KEYBOARD_STATUS_PORT);
+    printf("Received keyboard. Status: %x\n", status);
     if (status && 0x01) {
         keycode = inb(KEYBOARD_DATA_PORT);
-        if (keycode == 0x1C) {
-            kprint("A");
+        printf("Keycode received: %x\n", keycode);
+/*         if (keycode == 0x1C) {
+            puts("A");
             return;
         }
         if (keycode == 0x01) {
-            kprint("A");
+            puts("A");
             return;
         }
         if (keycode < 0 || keycode > 27)
@@ -27,6 +29,7 @@ void keyboard_handler_main(void) {
         //     return;
         // }
 
-        kprint(keyboard_map[keycode]);
+ */
+         putline(keyboard_map[keycode]);
     }
 }

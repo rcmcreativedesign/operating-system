@@ -1,4 +1,4 @@
-#include "screen.h"
+//#include "screen.h"
 #include "idt.h"
 #include "timer.h"
 #include "kernel.h"
@@ -7,8 +7,8 @@
 
 void main() {
 
-	kclear_screen();
-
+	init_video();
+/*
 	kprint_char('H', 0, 5, WHITE_ON_BLACK);
 	kprint_char('E', 1, 5, WHITE_ON_BLACK);
 	kprint_char('L', 2, 5, WHITE_ON_BLACK);
@@ -42,15 +42,20 @@ void main() {
 	kprint_char('X', 14, 3, WHITE_ON_RED);
 	kprint_char('X', 13, 2, WHITE_ON_RED);
 	kprint_char('X', 12, 2, WHITE_ON_RED);
-	
+*/
+	puts("256 in hex = ");
+	puthex(256);
+	putch('\n');
+	puts("256 in dec = ");
+	putdec(256);
+	putch('\n');
+
 	idt_init();
 	timer_init();
 
-	// //sleep(1);
-	// while(timer_ticks < 18 & 300)
-	// 	kprint("One Tick");
+	sleep(1);
+	puts("\n\nR:>");
 
-	if (timer_ticks > 1)
-		kreset_prompt();
+
 
 }

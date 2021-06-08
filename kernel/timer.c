@@ -12,8 +12,15 @@ void timer_phase(int hz) {
 
 void timer_handler() {
     timer_ticks++;
+/*     if (DEBUG && timer_ticks % (18 * 3) == 0) {
+        puts("Tick: ");
+        puthex(timer_ticks);
+        putch('\n');
+    } */
 }
 
 void timer_init() {
     timer_ticks = 0;
+    if (DEBUG)
+        putline("Timer Initialized");
 }
