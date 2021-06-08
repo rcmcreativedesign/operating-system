@@ -50,8 +50,11 @@ void main() {
 	putdec(256);
 	putch('\n');
 
-	idt_init();
-	timer_init();
+	idt_initialize();
+	isr_initialize();
+	irq_initialize();
+	//idt_init();
+	//timer_init();
 
 	sleep(1);
 	puts("\n\nR:>");

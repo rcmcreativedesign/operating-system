@@ -1,6 +1,7 @@
 #include "kernel.h"
 //#include "screen.h"
 #include "keycodes.h"
+#include "../libc/string.h"
 
 #define KEYBOARD_STATUS_PORT 0x64
 #define KEYBOARD_DATA_PORT 0x60
