@@ -6,7 +6,7 @@
 #define KEYBOARD_STATUS_PORT 0x64
 #define KEYBOARD_DATA_PORT 0x60
 
-void keyboard_handler_main(void) {
+void keyboard_handler(struct regs *r) {
     unsigned char status;
     char keycode;
 
@@ -33,4 +33,8 @@ void keyboard_handler_main(void) {
  */
          putline(keyboard_map[keycode]);
     }
+}
+
+void keyboard_initialize() {
+    register_irq_handler(1, keyboard_handler);
 }

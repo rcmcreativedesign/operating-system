@@ -4,6 +4,7 @@
 #include "kernel.h"
 #include "../libc/sleep.h"
 #include "../libc/types.h"
+#include "../libc/string.h"
 
 void main() {
 
@@ -51,14 +52,26 @@ void main() {
 	putch('\n');
 
 	idt_initialize();
+	printf("IDT Initialized\n");
+
 	isr_initialize();
+	printf("ISR Initialized\n");
+
 	irq_initialize();
-	//idt_init();
-	//timer_init();
+	printf("IRQ Initialized\n");
+
+	timer_init();
+	printf("Timer Initialized\n");
+
+	keyboard_initialize();
+	printf("Keyboard Initialized\n");
 
 	sleep(1);
+	printf("Slept for 1 second\n");
+	
 	puts("\n\nR:>");
 
-
-
+	for(;;) {
+		asm("hlt");
+	}
 }

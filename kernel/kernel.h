@@ -18,7 +18,7 @@ extern void settextcolor(unsigned char forecolor, unsigned char backcolor);
 extern void init_video();
 
 /* KEYBOARD */
-void keyboard_handler_main(void);
+void keyboard_initialize();
 
 /* TIMER */
 void timer_handler();

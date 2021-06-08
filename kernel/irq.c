@@ -1,5 +1,6 @@
 #include "kernel.h"
 #include "../libc/types.h"
+#include "../libc/string.h"
 
 void pic_ack(bool both);
 void remap_pic(void);
@@ -44,6 +45,8 @@ void remap_pic(void) {
 
     outb(0x21, 0x0);
     outb(0xA1, 0x0);
+
+    printf("PIC Remapped\n");
 }
 
 void *irq_routines[16] = {
@@ -52,6 +55,7 @@ void *irq_routines[16] = {
 };
 
 void register_irq_handler(int irq, void (*handler)(struct regs *r)) {
+    printf("Registered IRQ %u\n", irq);
     irq_routines[irq] = handler;
 }
 
@@ -60,8 +64,6 @@ void unregister_irq_handler(int irq) {
 }
 
 void irq_initialize() {
-    remap_pic();
-
     register_idt_gate(32, (unsigned)irq0, 0x08, 0x8E);
     register_idt_gate(33, (unsigned)irq1, 0x08, 0x8E);
     register_idt_gate(34, (unsigned)irq2, 0x08, 0x8E);
@@ -78,9 +80,14 @@ void irq_initialize() {
     register_idt_gate(45, (unsigned)irq13, 0x08, 0x8E);
     register_idt_gate(46, (unsigned)irq14, 0x08, 0x8E);
     register_idt_gate(47, (unsigned)irq15, 0x08, 0x8E);
+
+    remap_pic();
 }
 
-void irq_handler(struct regs *r) {
+/* void irq_handler(struct regs *r) {
+    putline("IRQ Handler for ");
+    putdec(r->int_no);
+    putch('\n');
     void (*handler)(struct regs *r);
 
     handler = irq_routines[r->int_no - 32];
@@ -88,4 +95,9 @@ void irq_handler(struct regs *r) {
         handler(r);
         
     pic_ack(r->int_no >= 40 ? true : false);
+} */
+
+void irq_handler() {
+    putline("IRQ Handler2");
+    pic_ack(true);
 }

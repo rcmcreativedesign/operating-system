@@ -1,6 +1,17 @@
 [bits 32]
 [extern main]
 
+[global idt_load]
+[extern idtp]
+
+call main
+jmp $
+
+idt_load:
+	lidt [idtp]
+	ret
+
+
 [global isr0]
 [global isr1]
 [global isr2]
@@ -34,36 +45,7 @@
 [global isr30]
 [global isr31]
 
-[global irq0]
-[global irq1]
-[global irq2]
-[global irq3]
-[global irq4]
-[global irq5]
-[global irq6]
-[global irq7]
-[global irq8]
-[global irq9]
-[global irq10]
-[global irq11]
-[global irq12]
-[global irq13]
-[global irq14]
-[global irq15]
-
-[global load_idt]
-
 [extern fault_handler]
-[extern irq_handler]
-
-call main
-jmp $
-
-load_idt:
-	mov edx, [esp + 4]
-	lidt [edx]
-	sti
-	ret
 
 isr0:
 	cli
@@ -272,7 +254,28 @@ isr_common_stub:
 	pop ds
 	popa
 	add esp, 8
+	sti
 	iret
+
+
+[global irq0]
+[global irq1]
+[global irq2]
+[global irq3]
+[global irq4]
+[global irq5]
+[global irq6]
+[global irq7]
+[global irq8]
+[global irq9]
+[global irq10]
+[global irq11]
+[global irq12]
+[global irq13]
+[global irq14]
+[global irq15]
+
+[extern irq_handler]
 
 irq0:
 	cli
@@ -391,4 +394,5 @@ irq_common_stub:
 	pop ds
 	popa
 	add esp, 8
+	sti
 	iret
