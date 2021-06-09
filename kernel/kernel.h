@@ -10,12 +10,15 @@ void outw(unsigned short port, unsigned short data);
 /* SCREEN */
 extern void cls();
 extern void putch(unsigned char c);
+extern void putch_at(unsigned char c, unsigned char loc);
 extern void puthex(unsigned int hex);
 extern void putdec(unsigned int dec);
 extern void puts(unsigned char *str);
+extern void puts_at(unsigned char *text, unsigned char loc);
 extern void putline(unsigned char *str);
 extern void settextcolor(unsigned char forecolor, unsigned char backcolor);
 extern void init_video();
+extern void *convert_to_dec(unsigned int dec, char *arrdec);
 
 /* KEYBOARD */
 void keyboard_handler_main(void);

@@ -75,11 +75,29 @@ void putch(unsigned char c) {
     move_csr();
 }
 
+void putch_at(unsigned char c, unsigned char loc) {
+    unsigned short *where;
+    unsigned att = attrib << 8;
+
+    if (c >= ' ') {
+        where = textmemptr + loc;
+        *where = c | att;
+    }
+}
+
 void puts(unsigned char *text) {
     int i;
 
     for (i = 0; i < strlen(text); i++)
         putch(text[i]);
+}
+
+void puts_at(unsigned char *text, unsigned char loc) {
+    int i;
+
+    for (i = 0; i < strlen(text); i++) {
+        putch_at(text[i], loc + i);
+    }
 }
 
 void putline(unsigned char *text) {
@@ -137,6 +155,10 @@ void puthex(unsigned int hex) {
 
 void putdec(unsigned int dec) {
     char decarr[33] = {0};
+    puts(convert_to_dec(dec, decarr));
+}
+
+void *convert_to_dec(unsigned int dec, char *decarr) {
     int index = 31;
 
     for (index = 31; index >= 0; index--) {
@@ -148,7 +170,7 @@ void putdec(unsigned int dec) {
         dec /= 10;
     }
     index = index == -1 ? index + 1 : index;
-    puts(&decarr[index]);
+    return &decarr[index];
 }
 
 void settextcolor(unsigned char forecolor, unsigned char backcolor) {
