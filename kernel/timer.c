@@ -1,6 +1,7 @@
 #include "kernel.h"
 #include "../libc/string.h"
 
+int number_of_digits(int num);
 void timer_phase(int hz);
 int timer_ticks = 0;
 
@@ -19,11 +20,30 @@ void timer_handler(struct regs *r) {
         puthex(timer_ticks);
         putch('\n');
     } */
+
+    int loc = 80;
+    char decarr[33] = {0};
+    char decarr2[33] = {0};
+
+    puts_at(convert_to_dec(timer_ticks, decarr), loc - number_of_digits(timer_ticks));
+    if (timer_ticks % 18 == 0)
+        puts_at(convert_to_dec(timer_ticks / 18, decarr2), loc * 2 - number_of_digits(timer_ticks / 18));
 }
 
 void timer_init() {
     register_irq_handler(0, timer_handler);
 /* 
     if (DEBUG)
-        putline("Timer Initialized"); */
+        putline("Timer Initialized");
+        */
+}
+
+int number_of_digits(int num) {
+    int count = 0;
+    do
+    {
+        count++;
+        num /= 10;
+    } while (num != 0);
+    return count;
 }
