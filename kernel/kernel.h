@@ -11,6 +11,7 @@ void outw(unsigned short port, unsigned short data);
 extern void cls();
 extern void putch(unsigned char c);
 extern void puthex(unsigned int hex);
+extern void putdec(unsigned int dec);
 extern void puts(unsigned char *str);
 extern void putline(unsigned char *str);
 extern void settextcolor(unsigned char forecolor, unsigned char backcolor);
