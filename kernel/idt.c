@@ -6,11 +6,11 @@
 extern void idt_load();
 
 struct IDT_entry {
-    unsigned short int offset_lowerbits;
-    unsigned short int selector;
+    unsigned short offset_lowerbits;
+    unsigned short selector;
     unsigned char zero;
     unsigned char type_attr;
-    unsigned short int offset_higherbits;
+    unsigned short offset_higherbits;
 };
 
 struct IDT_ptr {

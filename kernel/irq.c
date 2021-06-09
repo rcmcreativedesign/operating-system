@@ -22,8 +22,6 @@ extern void irq13();
 extern void irq14();
 extern void irq15();
 
-
-
 void pic_ack(bool both) {
     if (both)
         outb(0xA0, 0x20);
@@ -84,7 +82,7 @@ void irq_initialize() {
     remap_pic();
 }
 
-/* void irq_handler(struct regs *r) {
+void irq_handler(struct regs *r) {
     putline("IRQ Handler for ");
     putdec(r->int_no);
     putch('\n');
@@ -95,9 +93,4 @@ void irq_initialize() {
         handler(r);
         
     pic_ack(r->int_no >= 40 ? true : false);
-} */
-
-void irq_handler() {
-    putline("IRQ Handler2");
-    pic_ack(true);
 }

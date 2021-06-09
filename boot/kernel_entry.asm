@@ -11,7 +11,6 @@ idt_load:
 	lidt [idtp]
 	ret
 
-
 [global isr0]
 [global isr1]
 [global isr2]
@@ -246,8 +245,9 @@ isr_common_stub:
 	mov gs, ax
 	mov eax, esp
 	push eax
-	mov eax, fault_handler
-	call eax
+	;mov eax, [fault_handler]
+	;call eax
+	call fault_handler
 	pop eax
 	pop gs
 	pop fs
@@ -386,8 +386,9 @@ irq_common_stub:
 	mov gs, ax
 	mov eax, esp
 	push eax
-	mov eax, irq_handler
-	call eax
+	;mov eax, [irq_handler]
+	;call eax
+	call irq_handler
 	pop eax
 	pop gs
 	pop fs

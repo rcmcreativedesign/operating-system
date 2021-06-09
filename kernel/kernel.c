@@ -1,5 +1,4 @@
 //#include "screen.h"
-#include "idt.h"
 #include "timer.h"
 #include "kernel.h"
 #include "../libc/sleep.h"
