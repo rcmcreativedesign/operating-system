@@ -1,11 +1,39 @@
 [org 0x7c00]
 KERNEL_OFFSET equ 0x1000
+boot:
+	jmp boot_main
+	times 3-($-$$) DB 0x90
 
+	OEMname: 			db	"mkfs.fat"
+	bytesPerSector:		dw	512
+	sectPerCluster:		db	1
+	reservedSectors:	dw	1
+	numFAT:				db	2
+	numRootDirEntries:	dw	224
+	numSectors:			dw	2880
+	mediaType:			db	0xf0
+	numFATsectors:		dw	9
+	sectorsPerTrack:	dw	18
+	numHeads:			dw	2
+	numHiddenSectors:	dd	0
+	numSectorsHuge:		dd	0
+	driveNum:			db	0
+	reserved:			db	0
+	signature:			db	0x29
+	volumeID:			dd	0x2d7e5a1a
+	volumeLabel:		db	"NO NAME    "
+	fileSysType:		db	"FAT12"
+	
+boot_main:
 	mov [BOOT_DRIVE], dl
 	
 	mov bp, 0x9000
 	mov sp, bp
 	
+    xor ax, ax
+    mov ds, ax
+    mov es, ax
+    
 	mov bx, MSG_REAL_MODE
 	call print_string
 	call print_new_line
